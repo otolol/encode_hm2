@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { CustomBallot } from "../typechain";
-import { getBallotContract, getSigner, getTokenContract } from "./helpers";
+import { getBallotContract, getSigner } from "./helpers";
 import { EXPOSED_KEY } from "./key";
 
 async function main() {
