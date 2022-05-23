@@ -12,17 +12,21 @@ async function main() {
   if (process.argv.length < 3) {
     throw new Error("Token address missing");
   }
+  if(process.argv.length < 4) {
+    throw new Error("Delegate adress missing");
+  }
 
   const tokenAdress = process.argv[2];
+  const delegateAdress = process.argv[3];
   const tokenContract = await getTokenContract(tokenAdress, signer);
   const delegateTx = await tokenContract.delegate(
-    "0xdEd21B76F5B84e28eB3a13346A466d0eF1D21835"
+    delegateAdress
   );
   await delegateTx.wait();
   console.log(`delegate: ${delegateTx.hash}`);
   console.log(
     `votes: ${await tokenContract.getVotes(
-      "0xdEd21B76F5B84e28eB3a13346A466d0eF1D21835"
+      delegateAdress
     )}`
   );
 }

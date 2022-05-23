@@ -14,23 +14,22 @@ async function main() {
   if (process.argv.length < 3) {
     throw new Error("Ballot address missing");
   }
+
+  if(process.argv.length < 4) {
+    throw new Error("Vote weight is missing");
+  }
+
   const ballotAddress = process.argv[2];
+  const voteWeight = Number(process.argv[3])
   const ballotContract: CustomBallot = await getBallotContract(
     ballotAddress,
     signer
   );
-  const tokenAdress = "0x812F81c7f4bC0108a12415eE8f788a664E2b0E89";
-  const tokenContract = await getTokenContract(tokenAdress, signer);
-
-  console.log(
-    `get votes: ${await tokenContract.getVotes(
-      "0xdEd21B76F5B84e28eB3a13346A466d0eF1D21835"
-    )}`
-  );
+  
   console.log(`get votingPower: ${await ballotContract.votingPower()}`);
-  const BASE_VOTE_POWER = 10;
-  const voteAmount = ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18));
-  const voteTx = await ballotContract.vote(1, voteAmount);
+  const voteAmount = ethers.utils.parseEther(voteWeight.toFixed(18));
+  const voteTx = await ballotContract.connect(signer).vote(1, voteAmount);
+  await voteTx.wait()
   console.log(`voteTx: ${voteTx.hash}`);
 }
 

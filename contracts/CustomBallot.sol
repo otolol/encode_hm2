@@ -36,7 +36,7 @@ contract CustomBallot {
     }
 
     function vote(uint256 proposal, uint256 amount) external {
-       uint256 votingPowerAvailable = votingPower();
+        uint256 votingPowerAvailable = votingPower();
         require(votingPowerAvailable >= amount, "Has not enough voting power");
         spentVotePower[msg.sender] += amount;
         proposals[proposal].voteCount += amount;

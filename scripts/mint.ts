@@ -12,13 +12,20 @@ async function main() {
   if (process.argv.length < 3) {
     throw new Error("Token address missing");
   }
+  if(process.argv.length < 4) {
+    throw new Error("Mint address is missing");
+  }
+  if(process.argv.length < 5) {
+    throw new Error("Mint amount is missing");
+  }
   const tokenAdress = process.argv[2];
+  const mintAdress = process.argv[3];
+  const mintAm = Number(process.argv[4]);
   const tokenContract = await getTokenContract(tokenAdress, signer);
 
-  const BASE_VOTE_POWER = 10;
-  const mintAmount = ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18));
+  const mintAmount = ethers.utils.parseEther(mintAm.toFixed(18));
   const mintTx = await tokenContract.mint(
-    "0xdEd21B76F5B84e28eB3a13346A466d0eF1D21835",
+    mintAdress,
     mintAmount
   );
   await mintTx.wait();

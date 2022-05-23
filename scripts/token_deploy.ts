@@ -19,7 +19,7 @@ async function main() {
   console.log(`Waiting Confirmation`);
   const deployTx = await tokenContract.deployed();
   console.log(`deployed at: `, deployTx.address);
-  console.log(`token total sypply: ${await tokenContract.totalSupply()}`);
+  console.log(`token total supply: ${await tokenContract.totalSupply()}`);
 }
 
 main().catch((error) => {
